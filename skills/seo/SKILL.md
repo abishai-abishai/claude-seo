@@ -58,6 +58,7 @@ extension is also installable (see "Optional Extensions" below).
 | `/seo drift history <url>` | Show drift history over time |
 | `/seo ecommerce <url>` | E-commerce SEO: product schema, marketplace intelligence |
 | `/seo matomo [command] [args]` | Matomo Reporting API: GA4 alternative or supplement (extension) |
+| `/seo naver [command]` | Naver search: inflow without ad clicks, Search Advisor, ranking, Yeti crawl, AI Briefing (extension) |
 | `/seo firecrawl [command] <url>` | Full-site crawling and site mapping (extension) |
 | `/seo dataforseo [command]` | Live SEO data via DataForSEO (extension) |
 | `/seo image-gen [use-case] <description>` | AI image generation for SEO assets (extension) |
@@ -83,7 +84,7 @@ When the user invokes `/seo audit`, delegate to subagents in parallel:
 1. Detect business type (SaaS, local, ecommerce, publisher, agency, other)
 2. Spawn subagents: seo-technical, seo-content, seo-schema, seo-sitemap, seo-performance, seo-visual, seo-geo, seo-agentic
 3. If Google API credentials detected (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run google_auth.py --check`), also spawn seo-google agent
-4. If Matomo credentials detected (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check`), also spawn seo-matomo agent (alternative or complement to seo-google's GA4 reports)
+4. If Matomo credentials detected (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check`), also spawn seo-matomo agent (alternative or complement to seo-google's GA4 reports). If `~/.config/claude-seo/naver.json` exists, also spawn seo-naver agent (Naver Search category, 30% of the score; see seo-audit "Naver Integration")
 5. If local business detected, also spawn seo-local agent
 6. If local business detected AND DataForSEO MCP available, also spawn seo-maps agent
 7. If backlink APIs detected (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run backlinks_auth.py --check`), also spawn seo-backlinks agent
@@ -283,6 +284,11 @@ auto-routes to their descriptions without the `/seo` prefix.
   (Windows). Once installed, invoke via `/seo matomo <command>` or rely
   on the audit orchestrator to spawn the seo-matomo agent automatically
   when credentials are present.
+- **seo-naver** -- Naver search block for sites whose main search engine is
+  Naver. Install via `extensions/naver/install.sh` (Unix) or
+  `extensions/naver/install.ps1` (Windows). Once installed, invoke via
+  `/seo naver <command>` or rely on the audit orchestrator to spawn the
+  seo-naver agent when `~/.config/claude-seo/naver.json` exists.
 
 ## Subagents
 

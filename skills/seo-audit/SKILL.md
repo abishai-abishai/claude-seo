@@ -30,6 +30,7 @@ metadata:
    - `seo-maps` -- Geo-grid rank tracking, GBP audit, review intelligence, competitor radius mapping (spawn when Local Service detected AND DataForSEO MCP available)
    - `seo-google` -- CWV field data (CrUX), URL indexation (GSC), organic traffic (GA4) (spawn when Google API credentials detected via `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run google_auth.py --check`)
    - `seo-matomo` -- Matomo Reporting API: organic traffic, landing pages, device / country splits, referrer analysis (spawn when Matomo credentials detected via `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check`; runs alongside `seo-google` when both are configured, or as a GA4 alternative when GA4 is not)
+   - `seo-naver` -- Naver Search block: Naver search inflow without Naver ad clicks, Search Advisor exports, keyword ranking on Naver, Yeti crawl checks, site: indexed pages, Naver AI Briefing (spawn when `~/.config/claude-seo/naver.json` exists; see Naver Integration below)
    - `seo-backlinks` -- Backlink profile data: DA/PA, referring domains, anchor text, toxic links (spawn when Moz or Bing API credentials detected via `"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run backlinks_auth.py --check`, or always include Common Crawl domain-level metrics)
    - `seo-cluster` -- Semantic clustering analysis (spawn when content strategy signals detected: blog, pillar pages, topic clusters)
    - `seo-sxo` -- Search experience analysis: page-type mismatch, user stories, persona scoring (always include in full audits)
@@ -113,6 +114,20 @@ Write `{domain}-audit/audit-data.json` with this shape so `"${CLAUDE_PLUGIN_ROOT
 | AI Search Readiness | 10% |
 | Images | 5% |
 
+When `~/.config/claude-seo/naver.json` exists, the Naver Search category joins
+the score and the other weights shrink in proportion:
+
+| Category | Weight with Naver config |
+|----------|--------|
+| Naver Search | 30% |
+| Content Quality | 16% |
+| Technical SEO | 15% |
+| On-Page SEO | 14% |
+| Schema / Structured Data | 7% |
+| Performance (CWV) | 7% |
+| AI Search Readiness | 7% |
+| Images | 4% |
+
 ## Report Structure
 
 ### Executive Summary
@@ -159,6 +174,14 @@ Write `{domain}-audit/audit-data.json` with this shape so `"${CLAUDE_PLUGIN_ROOT
 - Structural improvements
 - Authority signals
 
+### Naver Search (only with Naver config)
+- Naver search inflow without ad clicks, and the ad-click line next to the GA4 organic number
+- Search Advisor impressions, clicks, crawl and errors
+- Keyword ranking on Naver
+- Yeti crawl check problems
+- Pages Naver has indexed, AI Briefing citations
+- Items not measured, with the reason
+
 ## Priority Definitions
 
 - **Critical**: Blocks indexing or causes penalties (fix immediately)
@@ -177,6 +200,18 @@ If Google API credentials are configured (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude
 ## Matomo Integration (Optional)
 
 If Matomo credentials are configured (`"${CLAUDE_PLUGIN_ROOT}/scripts/claude-seo" run matomo_auth.py --check`), spawn the `seo-matomo` agent to enrich the audit with self-hosted analytics: organic visits trend, top landing pages, device and country breakdowns, channel / search-engine split, and organic keywords. Works as a GA4 alternative (when only Matomo is configured) or as a complement (when both GA4 and Matomo are present). Matomo numbers will not match GA4 exactly because of segmentation differences (`referrerType==search` vs `sessionDefaultChannelGroup == "Organic Search"`) and attribution-window rules.
+
+## Naver Integration (Optional)
+
+If `~/.config/claude-seo/naver.json` exists, spawn the `seo-naver` agent with the same `output_dir`. It follows `${CLAUDE_PLUGIN_ROOT}/docs/NAVER.md` and writes `findings/naver.md` plus `naver/naver-category.json`. Then:
+
+- Add the content of `naver/naver-category.json` to `audit-data.json` `categories[]` as the "Naver Search" category (drop its `not_measured` and `google_organic_line` keys there, keep them in the report).
+- Use the weights table with Naver config for the SEO Health Score.
+- Add a "Naver Search" section to `FULL-AUDIT-REPORT.md` with the items, the items not measured and why, and the score arithmetic.
+- Put the `google_organic_line` sentence directly under the GA4 organic number from `seo-google`. Do not change that number.
+- Mix the Naver findings into `ACTION-PLAN.md` by the same priority order (Critical > High > Medium > Low).
+
+Without `naver.json`, nothing in this section runs and the original weights apply.
 
 ## Google Update Correlation
 

@@ -719,6 +719,26 @@ All commands accept `--days` (default 28), `--limit` (default 50),
 
 ---
 
+### `/seo naver [command]`
+
+Naver search block (extension, this fork). **Prerequisites:** Naver extension installed (`./extensions/naver/install.sh`), which writes a starter `~/.config/claude-seo/naver.json` when it does not exist. Spec: `docs/NAVER.md`.
+
+```
+/seo naver traffic                 # GA4 Naver search inflow without Naver ad clicks (NaPm)
+/seo naver advisor                 # Search Advisor chart exports (export_chart*.xls)
+/seo naver candidates              # Keyword candidates: site categories + top natural landing products
+/seo naver rank                    # Keyword ranking: mobile integrated search, PC web tab (60 slots)
+/seo naver crawl                   # Yeti crawl check against the webmaster guide
+/seo naver index                   # site: indexed pages compared with the sitemap
+/seo naver briefing                # AI Briefing answers, citations, brand mentions
+```
+
+All commands accept `--json` and `--output-dir`. The audit orchestrator spawns
+the `seo-naver` agent when `naver.json` exists, and the Naver Search category
+then counts for 30% of the SEO Health Score.
+
+---
+
 ### `/seo profound [command] <brand>`
 
 LLM brand-citation tracking via Profound (extension). **Prerequisites:** Profound extension installed.

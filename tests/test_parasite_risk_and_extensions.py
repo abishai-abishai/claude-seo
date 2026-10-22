@@ -106,6 +106,7 @@ def test_audit_page_counts_pattern_hits() -> None:
         ("profound", "seo-profound"),
         ("bing-webmaster", "seo-bing"),
         ("matomo", "seo-matomo"),
+        ("naver", "seo-naver"),
         ("unlighthouse", "seo-unlighthouse"),
     ],
 )
@@ -168,6 +169,7 @@ def test_every_extension_install_and_uninstall_is_executable() -> None:
         ("profound", "seo-profound"),
         ("bing-webmaster", "seo-bing"),
         ("matomo", "seo-matomo"),
+        ("naver", "seo-naver"),
         ("unlighthouse", "seo-unlighthouse"),
     ],
 )

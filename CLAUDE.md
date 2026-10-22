@@ -90,7 +90,7 @@ claude-seo/
     seo-flow.md                  # FLOW framework integration
   hooks/                           # Quality gate hooks
     hooks.json                   # PostToolUse schema validation
-  scripts/                         # 60 Python execution scripts
+  scripts/                         # 66 Python execution scripts
     google_auth.py               # Credential management (OAuth, SA, API key, 4-tier detection)
     backlinks_auth.py            # Backlink API credential management (Moz, Bing)
     moz_api.py                   # Moz Link Explorer API (DA/PA, spam, domains, anchors)
@@ -105,6 +105,12 @@ claude-seo/
     ga4_report.py                # GA4 organic traffic reports
     matomo_auth.py               # Matomo credential management (extension)
     matomo_report.py             # Matomo Reporting API client (extension)
+    naver_traffic.py             # GA4 Naver search inflow without Naver ad clicks (NaPm)
+    naver_search_advisor.py      # Naver Search Advisor chart export reader
+    naver_keyword_rank.py        # Naver keyword ranking (mobile integrated search, PC web tab)
+    naver_crawl_check.py         # Naver Yeti crawl check against the webmaster guide
+    naver_site_index.py          # Naver site: indexed pages and sitemap comparison
+    naver_ai_briefing.py         # Naver AI Briefing answers, citations and brand mentions
     keywordseverywhere_api.py    # Keywords Everywhere (Open PageRank) backlinks fallback
     google_report.py             # PDF/HTML report generator (WeasyPrint + matplotlib)
     youtube_search.py            # YouTube Data API v3

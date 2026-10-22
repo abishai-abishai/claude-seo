@@ -1,3 +1,29 @@
+# Claude SEO + 네이버
+
+이 저장소는 [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo)의 포크입니다.
+
+**목표: `/seo audit`을 하면 원래 스킬이 하던 점검과, 이 포크가 정한 네이버 쪽 수집을 함께 해서 하나의 리포트를 씁니다.**
+네이버 리포트를 따로 만들지 않습니다. 원래 스킬이 내보내는 결과물(`FULL-AUDIT-REPORT.md` · `ACTION-PLAN.md` · `audit-data.json` · PDF)에 네이버 결과가 함께 들어갑니다.
+
+### 네이버 쪽에서 모으는 것
+
+| 항목 | 어디서 |
+|---|---|
+| 네이버 검색 유입 (광고 클릭을 뺀 것) | GA4 |
+| 서치어드바이저 노출 · 클릭 · 수집 · 오류 | 서치어드바이저에서 내려받은 파일 |
+| 검색어 순위 | 네이버 검색 |
+| 네이버 로봇(Yeti) 수집 점검 | 사이트에 직접 요청 |
+| 네이버 검색에 잡힌 페이지 수 | 네이버 검색 `site:` |
+| AI 브리핑 인용 | 네이버 검색 |
+
+- 네이버 설정 파일 `~/.config/claude-seo/naver.json`이 있을 때만 네이버 쪽이 함께 돕니다. 없으면 원래 스킬 그대로입니다.
+- 무엇을 어디서 어떻게 세는지는 정본 문서 [docs/NAVER.md](docs/NAVER.md)에 있습니다.
+- **진행 상태: 만드는 중입니다.** 위 동작은 아직 `/seo audit`에 연결되지 않았습니다.
+
+아래는 원래 스킬의 README입니다.
+
+---
+
 ![Claude SEO cover: a Claude Code command palette with /seo audit, schema, geo, content, and backlinks commands over a dark CRT panel](assets/cover.svg)
 
 # Claude SEO: SEO Skill for Claude Code
